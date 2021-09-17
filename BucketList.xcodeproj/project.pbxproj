@@ -16,6 +16,7 @@
 		E94CF3E126F262CA005E748B /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94CF3E026F262CA005E748B /* EditView.swift */; };
 		E94CF3E326F27838005E748B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94CF3E226F27838005E748B /* Result.swift */; };
 		E94CF3E526F3217C005E748B /* MKPointAnnotation-Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94CF3E426F3217C005E748B /* MKPointAnnotation-Codable.swift */; };
+		E94CF3E726F48D4E005E748B /* MapUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94CF3E626F48D4E005E748B /* MapUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E94CF3E026F262CA005E748B /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		E94CF3E226F27838005E748B /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		E94CF3E426F3217C005E748B /* MKPointAnnotation-Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation-Codable.swift"; sourceTree = "<group>"; };
+		E94CF3E626F48D4E005E748B /* MapUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		E94CF3CA26EFE1C0005E748B /* BucketList */ = {
 			isa = PBXGroup;
 			children = (
+				E94CF3E626F48D4E005E748B /* MapUIView.swift */,
 				E94CF3E426F3217C005E748B /* MKPointAnnotation-Codable.swift */,
 				E94CF3CB26EFE1C0005E748B /* BucketListApp.swift */,
 				E94CF3CD26EFE1C0005E748B /* ContentView.swift */,
@@ -154,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E94CF3E526F3217C005E748B /* MKPointAnnotation-Codable.swift in Sources */,
+				E94CF3E726F48D4E005E748B /* MapUIView.swift in Sources */,
 				E94CF3E326F27838005E748B /* Result.swift in Sources */,
 				E94CF3CE26EFE1C0005E748B /* ContentView.swift in Sources */,
 				E94CF3E126F262CA005E748B /* EditView.swift in Sources */,

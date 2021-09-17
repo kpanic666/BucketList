@@ -11,95 +11,23 @@ import MapKit
 
 struct ContentView: View {
   @State private var isUnlocked = false
-  @State private var centerCoordinate = CLLocationCoordinate2D()
-  @State private var selectedPlace: MKPointAnnotation?
-  @State private var showingPlaceDetails = false
-  @State private var locations = [CodableMKPointAnnotation]()
-  @State private var showingEditScreen = false
+  @State private var errorShow = false
+  @State private var errorText = ""
   
   var body: some View {
-    ZStack {
-      if isUnlocked {
-        MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotations: locations)
-          .edgesIgnoringSafeArea(.all)
-        
-        Circle()
-          .fill(Color.blue)
-          .opacity(0.3)
-          .frame(width: 32, height: 32)
-        
-        VStack {
-          Spacer()
-          HStack {
-            Spacer()
-            Button(action: {
-              let newLocation = CodableMKPointAnnotation()
-              newLocation.coordinate = centerCoordinate
-              newLocation.title = "Example location"
-              locations.append(newLocation)
-              
-              selectedPlace = newLocation
-              showingEditScreen = true
-            }) {
-              Image(systemName: "plus")
-            }
-            .padding()
-            .background(Color.black.opacity(0.75))
-            .foregroundColor(.white)
-            .font(.title)
-            .clipShape(Circle())
-            .padding(.trailing)
-          }
-        }
-      } else {
-        Button("Unlock Places") {
-          authenticate()
-        }
-        .padding()
-        .background(Color.blue)
-        .foregroundColor(.white)
-        .clipShape(Capsule())
+    if isUnlocked {
+      MapUIView()
+    } else {
+      Button("Unlock Places") {
+        authenticate()
       }
-    }
-    .alert(isPresented: $showingPlaceDetails) {
-      Alert(title: Text(selectedPlace?.title ?? "Unknown"), message: Text(selectedPlace?.subtitle ?? "Missing place information"),
-            primaryButton: .default(Text("OK")),
-            secondaryButton: .default(Text("Edit")) {
-              showingEditScreen = true
-            })
-    }
-    .sheet(isPresented: $showingEditScreen, onDismiss: saveData) {
-      if selectedPlace != nil {
-        EditView(placemark: selectedPlace!)
+      .padding()
+      .background(Color.blue)
+      .foregroundColor(.white)
+      .clipShape(Capsule())
+      .alert(isPresented: $errorShow) {
+        Alert(title: Text("Error"), message: Text(errorText), dismissButton: .default(Text("OK")))
       }
-    }
-    .onAppear(perform: loadData)
-  }
-  
-  func getDocumentsDirectory() -> URL {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    return paths[0]
-  }
-  
-  func loadData() {
-    let filename = getDocumentsDirectory().appendingPathComponent("SavedPlaces")
-    
-    // FIXME: doesn't load saved data
-    do {
-      let data = try Data(contentsOf: filename)
-      locations = try JSONDecoder().decode([CodableMKPointAnnotation].self, from: data)
-    } catch {
-      print("Unable to load saved data.")
-    }
-  }
-  
-  func saveData() {
-    do {
-      let filename = getDocumentsDirectory().appendingPathComponent("SavedPlaces")
-      let data = try JSONEncoder().encode(locations)
-      try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
-    } catch {
-      print("Unable to save data.")
     }
   }
   
@@ -115,14 +43,15 @@ struct ContentView: View {
           if success {
             isUnlocked = true
           } else {
-            
+            errorShow = true
+            errorText = authenticationError?.localizedDescription ?? "Access failed."
           }
         }
       }
     } else {
-      
+      errorShow = true
+      errorText = error?.localizedDescription ?? "Your device doesn't support biometrical ID."
     }
-    
   }
 }
 
@@ -131,4 +60,3 @@ struct ContentView_Previews: PreviewProvider {
     ContentView()
   }
 }
-
